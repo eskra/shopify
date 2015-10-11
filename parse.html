@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="/Users/Eskra/Desktop/jquery-2.1.4.js"></script> 
+</head>
+
+<body>
+<script>
+var totalmonies = 0.0;
+
+$.ajax({
+
+	type: 'GET',
+	url: 'http://shopicruit.myshopify.com/products.json',
+	dataType: 'json',
+	success: function (data) {
+		//store products from ajax-parsed data into array
+		var products = data.products;
+
+		//go through products and check which have product type = Lamp or = Wallet
+		for (i = 0; i < products.length; i++){
+			if(products[i].product_type == "Lamp" | products[i].product_type == "Wallet"){
+
+				//go through variants and increment price
+				for(y = 0; y < products[i].variants.length; y++){
+					totalmonies += parseFloat(products[i].variants[y].price);
+				}
+			}
+		}
+		document.write("You need this much money to feed your lamps/wallet addiction: $" + totalmonies);
+		document.write('<img src=\"https:\/\/themoneydoc.files.wordpress.com\/2011\/03\/flying_money.jpg?w=514&h=379\">')
+	}
+});
+
+</script>
+</body>
+
+</html>
